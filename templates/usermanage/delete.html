@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>删除用户</title>
+</head>
+<body>
+{% if user.is_authenticated %}
+<form method="POST" action="">
+{% csrf_token %}
+    <p>是否要删除该用户？{{ object }}</p>
+    <br>
+    <button type="submit">确认</button>
+</form>
+{% endif %}
+
+</body>
+</html>

@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}
+    文章详情
+{% endblock title %}
+{% block content %}
+    <!-- 文章详情 -->
+    <div class="container">
+        <div class="row">
+            <!-- 标题及作者 -->
+            <h1 class="col-12 mt-4 mb-4 text-center">{{ article.title }}</h1>
+            <div class="col-12 alert alert-success">作者：{{ article.author }}
+                {% if user == article.author %}
+                    · <a href="{% url "blog:article_delete" article.id%}">删除文章</a>
+                    · <a href="{% url "blog:article_update" article.id %}">编辑文章</a>
+                {% endif %}
+                <br>
+                浏览：{{ article.views }}
+            </div>
+
+            <!-- 文章正文 -->
+            <div class="col-12">
+                <p>{{ article.body|safe|linebreaksbr }}</p>
+            </div>
+            <!-- 发表评论 -->
+    <hr>
+    {% if user.is_authenticated %}
+        <div>
+            <form
+                action="{% url 'blog:article_detail' article.id %}"
+                method="POST"
+            >
+            {% csrf_token %}
+                <div class="form-group">
+                    <label for="body">
+                        <strong>
+                            我也要发言：
+                        </strong>
+                    </label>
+                    <textarea
+                        type="text"
+                        class="form-control"
+                        id="body"
+                        name="body"
+                        rows="2"></textarea>
+                </div>
+                <!-- 提交按钮 -->
+                <button type="submit" class="btn btn-primary ">发送</button>
+            </form>
+        </div>
+        <br>
+        <br>
+    {% else %}
+        <div>
+            <form
+                action="{% url 'blog:article_detail' article.id %}"
+                method="POST"
+            >
+            {% csrf_token %}
+                <div class="form-group">
+                    <label for="nikename">
+                        <strong>
+                            昵称(可为空)：
+                        </strong>
+                    </label>
+                    <input type="text" class="form-control" id="nikename" name="nikename" rows="1"
+                           value="{{ comment.nikename }}">
+                    <label for="body">
+                        <strong>
+                            发言：
+                        </strong>
+                    </label>
+                    <textarea type="text" class="form-control" id="body" name="body" rows="2"value="{{ comment.context }}"></textarea>
+                    <label for="nikename">
+                        <strong>
+                            请留下邮箱以方便联系：
+                        </strong>
+                    </label>
+                    <input type="text" class="form-control" id="nikename" name="nikename" rows="1"
+                           value="{{ comment.email }}"/>
+                </div>
+                <!-- 提交按钮 -->
+                <button type="submit" class="btn btn-primary ">发送</button>
+            </form>
+        </div>
+        <br>
+        <br>
+    {% endif %}
+
+
+<div class="container">
+    <!-- 显示评论 -->
+    <h4>共有{{ comment.count }}条评论</h4>
+    <div>
+        {% for comment1 in comment %}
+            <hr>
+            <p>
+                <strong style="color: pink">
+                    {{ comment1.nikename }}
+                </strong> 于
+                <span style="color: green">
+                    {{ comment1.created_time|date:"Y-m-d H:i:s" }}
+                </span> 时说：
+            </p>
+            <pre style="font-family: inherit; font-size: 1em;">
+{{ comment1.context }}</pre>
+        {% endfor %}
+    </div>
+    </div>
+    </div>
+    </div>
+
+{% endblock content %}

@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% load static %}
+{% block titile %}
+用户信息修改
+{% endblock titile %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            {% if bloguser.avatar %}
+                <div class="col-md-4">头像</div>
+                <img src="{{ bloguser.avatar.url }}" style="max-width: 20%; border-radius: 15%;" class="col-md-4">
+            {% else %}
+                <h3 class="col-md-4">暂无头像</h3>
+            {% endif %}
+            <br>
+            <br>
+            <form enctype="multipart/form-data" method="post" action="">
+                {% csrf_token %}
+                    <!-- avatar -->
+                <div class="form-group">
+                    <label for="avatar">上传头像</label>
+                    <input type="file" class="form-control-file" name="avatar" id="avatar" value="{{ bloguser.avatar }}">
+                </div>
+                <div class="form-group">
+                    <label for="title">昵称</label>
+                    <!-- 在 value 属性中指定文本框的初始值为旧的内容，即 article 对象中的 title 字段 -->
+                    <input type="text" class="form-control" id="nikename" name="nikename" value="{{ bloguser.nikename }}">
+                </div>
+                <div class="form-group">
+                    <label for="title">邮箱</label>
+                    <!-- 在 value 属性中指定文本框的初始值为旧的内容，即 article 对象中的 title 字段 -->
+                    <input type="text" class="form-control" id="email" name="email" value="{{ bloguser.eamil }}">
+                </div>
+                <div class="form-group">
+                    <label for="body">个人简介</label>
+                    <!-- 文本域不需要 value 属性，直接在标签体中嵌入数据即可 -->
+                    <textarea type="text" class="form-control" id="profile" name="profile" rows="12">{{ bloguser.profile }}</textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">完成</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content%}

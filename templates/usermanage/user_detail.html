@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %} 用户详情页 {% endblock title %}
+{% block content %}
+    <div class="container-right">
+    <div class="container">
+        <div class="col-12">
+            {% if bloguser.avatar %}
+                <div class="col-md-4">头像</div>
+                <img src="{{ bloguser.avatar.url }}" style="max-width: 20%; border-radius: 15%;" class="col-md-4">
+            {% else %}
+                <p class="col-md-4">暂无头像</p>
+            {% endif %}
+            <br>
+            <div class="col-md-4">用户名: {{ bloguser.username }}</div>
+            <br>
+            <div class="col-md-4">昵称: {{ bloguser.nikename }}</div>
+            <br>
+            <div class="col-md-4">邮箱: {{ bloguser.email }}</div>
+            <br>
+            <div class="col-md-4">个人简介: {{ bloguser.profile }}</div>
+            <br>
+        </div>
+        <div class="card-footer">
+            <a href="{% url 'usermanage:user_detail_update' bloguser.id %}" class="btn btn-primary">修改信息</a>
+            <a href="{% url 'usermanage:user_delete' bloguser.id %}" class="btn btn-primary">删除用户</a>
+
+        </div>
+    </div>
+    </div>
+
+{% endblock content %}

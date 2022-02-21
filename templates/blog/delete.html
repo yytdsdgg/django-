@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form method="post">{% csrf_token %}
+    <p>要删除这篇文章吗"{{ object }}"?</p>
+    <input type="submit" value="Confirm">
+</form>
+</body>
+</html>
